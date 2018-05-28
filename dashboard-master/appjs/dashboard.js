@@ -1,7 +1,3 @@
-/**
- * Created by manuel on 5/8/18.
- */
-
 // Load the Visualization API and the piechart package.
 google.charts.load('current', {'packages': ['corechart']});
 
@@ -46,7 +42,7 @@ function drawChart() {
     data.addRows(reformatData(JSON.parse(jsonData)));
 
     var options = {
-        title: 'Messages By Day',
+        title: 'Messages Per Day',
         chartArea: {width: '50%'},
         hAxis: {
             title: 'Total Messages',
@@ -107,7 +103,7 @@ function drawChartLikes() {
     data.addRows(reformatDataLikes(JSON.parse(jsonData)));
 
     var options = {
-        title: 'Likes By Day',
+        title: 'Likes Per Day',
         chartArea: {width: '50%'},
         hAxis: {
             title: 'Total Likes',
@@ -168,7 +164,7 @@ function drawChartDisLikes() {
     data.addRows(reformatDataDisLikes(JSON.parse(jsonData)));
 
     var options = {
-        title: 'Dislikes By Day',
+        title: 'Dislikes Per Day',
         chartArea: {width: '50%'},
         hAxis: {
             title: 'Total Disikes',
@@ -228,7 +224,7 @@ function drawChartReplies() {
     data.addRows(reformatDataReplies(JSON.parse(jsonData)));
 
     var options = {
-        title: 'Replies By Day',
+        title: 'Replies Per Day',
         chartArea: {width: '50%'},
         hAxis: {
             title: 'Total Replies',
@@ -263,7 +259,7 @@ function reformatDataUsers(jsonData){
         console.log(row.count);
         console.log(row.mdate);
         console.log(row.uid);
-        dataElement.push(row.mdate + ' - ' + row.uid);
+        dataElement.push(row.mdate + ' - user id:' + row.uid);
         dataElement.push(row.count);
         result.push(dataElement);
     }
@@ -290,7 +286,7 @@ function drawChartUsers() {
     data.addRows(reformatDataUsers(JSON.parse(jsonData)));
 
     var options = {
-        title: 'Msg and Replies By Day',
+        title: 'Msg and Replies Per Day',
         chartArea: {width: '50%'},
         hAxis: {
             title: 'Total User Msg and Replies',
@@ -313,7 +309,7 @@ function drawChartUsers() {
 
 google.charts.setOnLoadCallback(drawChartHashtags);
 
-//USER POSTING MSG OR REPLIES  PER DAY
+//Hashtag  PER DAY
 function reformatDataHashtags(jsonData){
     var temp= jsonData.HashtagPosts;
     console.log("temp: " + JSON.stringify(temp));
@@ -325,7 +321,7 @@ function reformatDataHashtags(jsonData){
         dataElement = [];
         console.log(row.count);
         console.log(row.mdate);
-        dataElement.push(row.mdate);
+        dataElement.push(row.mdate  + " - #" + row.htext);
         dataElement.push(row.count);
         result.push(dataElement);
     }
@@ -334,7 +330,7 @@ function reformatDataHashtags(jsonData){
 }
 
 
-//USER POSTING MSG OR REPLIES  PER DAY
+//Hashtag  PER DAY
 function drawChartHashtags() {
     var jsonData = $.ajax({
         url: "http://localhost:5000/SikitrakeChat/Messages/counthashtagsperday",
@@ -347,11 +343,11 @@ function drawChartHashtags() {
     // Create our data table out of JSON data loaded from server.
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'mdate');
-    data.addColumn('number', 'Msg and Replies');
+    data.addColumn('number', 'Hashtags');
     data.addRows(reformatDataHashtags(JSON.parse(jsonData)));
 
     var options = {
-        title: 'Hashtags By Day',
+        title: 'Hashtags Per Day',
         chartArea: {width: '50%'},
         hAxis: {
             title: 'Total Hashtags',

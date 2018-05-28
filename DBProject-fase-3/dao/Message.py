@@ -126,7 +126,7 @@ class MessageDAO:
         # Dashboard
     def getMessagesByDate(self):
         cursor = self.conn.cursor()
-        query = "Select count(*), mdate From Messages group by mdate order by mdate;"
+        query = "Select count(*) as total, mdate From Messages group by mdate order by total desc;"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -135,8 +135,8 @@ class MessageDAO:
 
     def getCountLikesPerDay(self):
         cursor = self.conn.cursor()
-        query = "Select count(*), mdate from messages as m, reactions as r where m.mid = r.mid and " \
-                "mreaction = true group by mdate order by mdate;"
+        query = "Select count(*) as total, mdate from messages as m, reactions as r where m.mid = r.mid and " \
+                "mreaction = true group by mdate order by total desc;"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -145,8 +145,8 @@ class MessageDAO:
 
     def getCountDisLikesPerDay(self):
         cursor = self.conn.cursor()
-        query = "Select count(*), mdate from messages as m, reactions as r where m.mid = r.mid and " \
-                "mreaction = false group by mdate order by mdate;"
+        query = "Select count(*) as total, mdate from messages as m, reactions as r where m.mid = r.mid and " \
+                "mreaction = false group by mdate order by total desc;"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -155,8 +155,8 @@ class MessageDAO:
 
     def getCountRepliesPerDay(self):
         cursor = self.conn.cursor()
-        query = "Select count(*), mdate from messages as m, isReply as r " \
-                "where m.mid = r.r_msg_id group by mdate order by mdate;"
+        query = "Select count(*) as total, mdate from messages as m, isReply as r " \
+                "where m.mid = r.r_msg_id group by mdate order by total desc;"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -177,8 +177,8 @@ class MessageDAO:
 
     def getCountHashtagsPerDay(self):
         cursor = self.conn.cursor()
-        query = "Select count(*) as total, mdate from messages as m, hashtags as h where " \
-                "m.mid = h.mid group by mdate order by total desc;"
+        query = "Select count(*) as total, mdate, htext from messages as m, " \
+                "hashtags as h where m.mid = h.mid group by mdate, h.htext order by total desc;"
         cursor.execute(query)
         result = []
         for row in cursor:

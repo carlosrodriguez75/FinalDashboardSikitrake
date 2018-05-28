@@ -275,6 +275,7 @@ class MessageHandler:
             M = {}
             M['count'] = R[0]
             M['mdate'] = R[1]
+            M['htext'] = R[2]
             result.append(M)
         return result
 
